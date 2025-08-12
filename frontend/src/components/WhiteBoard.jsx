@@ -4,12 +4,13 @@ const WhiteBoardCanvas = () => {
 
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
-    const [lastPos, setLastPos] = useState({x: 0, y: 0 }) // to save mouse position along the way
-    const rect = canvasRef.current.getBoundingClientRect();
+    const [currentPos, setCurrentPos] = useState({x: 0, y:0});
+    const [lastPos, setLastPos] = useState({x: 0, y: 0 }); // to save mouse position along the way
+    
 
     const startDrawing = (e) => {
         setIsDrawing(true);
-        
+        const rect = canvasRef.current.getBoundingClientRect();
         setLastPos({
             x: e.clientX - rect.left,
             y: e.clientY - rect.top
@@ -18,12 +19,21 @@ const WhiteBoardCanvas = () => {
     }
 
     const draw = (e) => {
+        if (!isDrawing) return;
         console.log("Drawing");
-        setLastPos({
+        const rect = canvasRef.current.getBoundingClientRect();
+        setCurrentPos({
             x: e.clientX - rect.left,
             y: e.clientY - rect.top
         })
-        console.log(lastPos)
+
+        const ctx = canvasRef.current.getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(lastPos.x, lastPos.y);
+        ctx.lineTo(currentPos.x, currentPos.y);
+        ctx.stroke();
+
+        setLastPos(currentPos)
 
     }
 
@@ -35,8 +45,8 @@ const WhiteBoardCanvas = () => {
     return (
         <canvas 
             ref = {canvasRef}
-            width={800} 
-            height={400}
+            width={1000}
+            height={700}
             style={{border: "1px solid black"}}
             onMouseDown={startDrawing}
             onMouseMove={draw}
