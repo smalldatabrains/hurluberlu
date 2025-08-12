@@ -4,7 +4,10 @@ function App() {
 
   return (
     <>
-      {WhiteBoardCanvas}
+      <div>
+        <h3>Make it a mess</h3>
+        <WhiteBoardCanvas />
+      </div>
     </>
   )
 }

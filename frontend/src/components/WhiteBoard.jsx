@@ -4,7 +4,11 @@ const WhiteBoardCanvas = () => {
 
 
     return (
-        <canvas width={800} heigh={400}/>
+        <canvas 
+            width={800} 
+            height={400}
+            style={{border: "1px solid black"}}     
+        />
     )
 }
 
