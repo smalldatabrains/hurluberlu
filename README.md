@@ -5,6 +5,8 @@ Roadmap
 ## Phase 1 : Minimal Local Drawing Board
 React + Canvas API
 
+![alt text](image.png)
+
 ## Phase 2 : Loacal Network Sync with Websockets
 FastAPI or Websockets
 
