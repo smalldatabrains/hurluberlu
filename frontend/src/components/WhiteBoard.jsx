@@ -5,10 +5,11 @@ const WhiteBoardCanvas = () => {
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [lastPos, setLastPos] = useState({x: 0, y: 0 }) // to save mouse position along the way
+    const rect = canvasRef.current.getBoundingClientRect();
 
     const startDrawing = (e) => {
         setIsDrawing(true);
-        const rect = canvasRef.current.getBoundingClientRect();
+        
         setLastPos({
             x: e.clientX - rect.left,
             y: e.clientY - rect.top
@@ -16,8 +17,13 @@ const WhiteBoardCanvas = () => {
         console.log(lastPos)
     }
 
-    const draw = () => {
+    const draw = (e) => {
         console.log("Drawing");
+        setLastPos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        })
+        console.log(lastPos)
 
     }
 
