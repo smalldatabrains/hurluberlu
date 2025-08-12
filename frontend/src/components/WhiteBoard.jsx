@@ -2,18 +2,28 @@ import { useState, useRef } from "react";
 
 const WhiteBoardCanvas = () => {
 
-    const canvasRef = useRef(null)
+    const canvasRef = useRef(null);
+    const [isDrawing, setIsDrawing] = useState(false);
+    const [lastPos, setLastPos] = useState({x: 0, y: 0 }) // to save mouse position along the way
 
-    const startDrawing = () => {
-        console.log("start Drawing")
+    const startDrawing = (e) => {
+        setIsDrawing(true);
+        const rect = canvasRef.current.getBoundingClientRect();
+        setLastPos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        })
+        console.log(lastPos)
     }
 
     const draw = () => {
-        console.log("Drawing")
+        console.log("Drawing");
+
     }
 
     const stopDrawing = () => {
-        console.log("strop Drawing")
+        console.log("strop Drawing");
+        setIsDrawing(false);
     }
 
     return (
