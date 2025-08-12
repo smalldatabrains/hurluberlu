@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import WhiteBoardCanvas from './components/WhiteBoard'
 
 function App() {

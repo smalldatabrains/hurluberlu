@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const WhiteBoardCanvas = () => {
+
+    const canvasRef = useRef(null)
 
     const startDrawing = () => {
         console.log("start Drawing")
@@ -16,6 +18,7 @@ const WhiteBoardCanvas = () => {
 
     return (
         <canvas 
+            ref = {canvasRef}
             width={800} 
             height={400}
             style={{border: "1px solid black"}}
