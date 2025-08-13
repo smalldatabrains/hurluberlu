@@ -4,7 +4,7 @@ Roadmap
 
 ## Phase 1 : Minimal Local Drawing Board
 React + Canvas API
-
+Bug : departure point when drawing line is not okay
 ![alt text](image.png)
 
 ## Phase 2 : Loacal Network Sync with Websockets
