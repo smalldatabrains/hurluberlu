@@ -46,7 +46,7 @@ print(input.dtype)
 print(input.shape)
 print(input.device)
 
-output = model.forward(input)
+output = model.(input)
 
 print(output.dtype)
 print(output.shape)
