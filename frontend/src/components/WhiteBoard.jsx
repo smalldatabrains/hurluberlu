@@ -8,6 +8,16 @@ const WhiteBoardCanvas = () => {
     const [lastPos, setLastPos] = useState({x: 0, y: 0 }); // to save mouse position along the way
     const gridSize = 5 ; // use to snape pixel
 
+    const saveCanvas = () => {
+        const canvas = canvasRef.current;
+        const dataUrl = canvas.toDataURL("image/png");
+        fetch("http://localhost:8000/savecanvas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: dataUrl })
+        });
+    };
+
     const startDrawing = (e) => {
         setIsDrawing(true);
         console.log(lastPos)
@@ -31,6 +41,7 @@ const WhiteBoardCanvas = () => {
         ctx.fillRect(snappedX, snappedY, gridSize, gridSize);
 
         setLastPos(currentPos)
+        saveCanvas();
 
     }
 
@@ -38,6 +49,9 @@ const WhiteBoardCanvas = () => {
         console.log("strop Drawing");
         setIsDrawing(false);
     }
+
+    
+
 
     return (
         <canvas 
