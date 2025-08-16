@@ -22,10 +22,10 @@ const WhiteBoardCanvas = () => {
         if (!isDrawing) return;
         console.log("Drawing");
         const rect = canvasRef.current.getBoundingClientRect();
-        setCurrentPos({
+        const currentPos ={
             x: e.clientX - rect.left,
             y: e.clientY - rect.top
-        })
+        }
 
         const ctx = canvasRef.current.getContext("2d");
         ctx.beginPath();
