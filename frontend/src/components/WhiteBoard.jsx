@@ -6,16 +6,12 @@ const WhiteBoardCanvas = () => {
     const [isDrawing, setIsDrawing] = useState(false);
     const [currentPos, setCurrentPos] = useState({x: 0, y:0});
     const [lastPos, setLastPos] = useState({x: 0, y: 0 }); // to save mouse position along the way
-    
+    const gridSize = 5 ; // use to snape pixel
 
     const startDrawing = (e) => {
         setIsDrawing(true);
-        const rect = canvasRef.current.getBoundingClientRect();
-        setLastPos({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
-        })
         console.log(lastPos)
+        draw(e)
     }
 
     const draw = (e) => {
@@ -27,11 +23,12 @@ const WhiteBoardCanvas = () => {
             y: e.clientY - rect.top
         }
 
+        // snap to grid
+        const snappedX = Math.floor(currentPos.x / gridSize) * gridSize;
+        const snappedY = Math.floor(currentPos.y / gridSize) * gridSize;
+
         const ctx = canvasRef.current.getContext("2d");
-        ctx.beginPath();
-        ctx.moveTo(lastPos.x, lastPos.y);
-        ctx.lineTo(currentPos.x, currentPos.y);
-        ctx.stroke();
+        ctx.fillRect(snappedX, snappedY, gridSize, gridSize);
 
         setLastPos(currentPos)
 
