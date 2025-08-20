@@ -6,9 +6,10 @@ Roadmap
 React + Canvas API
 [x] Feature : save png after each pixel is drawn
 [x] Bug : departure point when drawing line is not okay
+
 ![alt text](image-1.png)
 
-## Phase 2 : Loacal Network Sync with Websockets
+## Phase 2 : Local Network Sync with Websockets
 # FastAPI or Websockets
 [ ] Read about these technologies
 
