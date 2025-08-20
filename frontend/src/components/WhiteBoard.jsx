@@ -1,7 +1,33 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+
+const useWebSocket = (url) => {
+    const ws = useRef(null);
+
+    useEffect(() => {
+        ws.current = new window.WebSocket(url);
+
+        ws.current.onopen = () => {
+            console.log("WebSocket connected");
+        };
+
+        ws.current.onmessage = (event) => {
+            console.log("Received:", event.data);
+        };
+
+        ws.current.onclose = () => {
+            console.log("WebSocket disconnected");
+        };
+
+        return () => {
+            ws.current.close();
+        };
+    }, [url]);
+
+    return ws;
+};
 
 const WhiteBoardCanvas = () => {
-
+    const ws = useWebSocket("ws://127.0.0.1:8765");
     const canvasRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [currentPos, setCurrentPos] = useState({x: 0, y:0});
@@ -20,7 +46,7 @@ const WhiteBoardCanvas = () => {
 
     const startDrawing = (e) => {
         setIsDrawing(true);
-        console.log(lastPos)
+        // console.log(lastPos)
         draw(e)
     }
 
@@ -46,7 +72,7 @@ const WhiteBoardCanvas = () => {
     }
 
     const stopDrawing = () => {
-        console.log("strop Drawing");
+        // console.log("strop Drawing");
         setIsDrawing(false);
     }
 

@@ -11,15 +11,15 @@ async def handler(websocket):
     print("There are", len(clients), "clients on the server")
     try:
         async for message in websocket:
-            print(message)
+            #print(message)
             print(websocket.remote_address) # ip and port
             # broadcast to everyone else:
         for client in clients:
             if client != websocket:
+                print("Information sent to other clients")
                 await client.send(message)
-    except websockets.ConnectionClosed:
-        class classname():
-            pass
+    except :
+        print("Exception")
     finally:
         clients.remove(websocket)
 
