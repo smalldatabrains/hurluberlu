@@ -11,9 +11,13 @@ React + Canvas API
 ## Phase 2 : Loacal Network Sync with Websockets
 FastAPI or Websockets
 [ ] Read about these technologies
+Here we would like to use a central server that broadcast realtime state of the canvas to all the cient (test it with different tabs in our case)
 ## Phase 3 : P2P upgrade with WebRTC
 WebRTC
+direct P2P information sharing, we would like to get rid of the central server used by websockets
 
 ## Phase 4 : Persistence and features
 
 ## Phase 5 : Polish and Fun
+change of Color
+change of square Size
