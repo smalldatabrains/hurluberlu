@@ -1,0 +1,12 @@
+service:
+  api:
+    build: .
+    command: python api.py  
+
+  server:
+    build: .
+    command: python server.py 
+
+  client:
+    build: .
+    command: python client.py
