@@ -15,6 +15,10 @@ React + Canvas API
 
 Here we would like to use a central server that broadcast realtime state of the canvas to all the cient (test it with different tabs in our case)
 
+server.py runs a websocket server that list clients connecting via the frontend
+clients connect via the frontend and the fastpi service to share information.
+
+
 ## Phase 3 : P2P upgrade with WebRTC
 WebRTC
 direct P2P information sharing, we would like to get rid of the central server used by websockets

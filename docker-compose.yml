@@ -1,12 +1,12 @@
-service:
+services:
   api:
-    build: .
+    build: ./backend/
     command: python api.py  
 
   server:
-    build: .
+    build: ./backend/ 
     command: python server.py 
 
   client:
-    build: .
+    build: ./backend/ 
     command: python client.py
