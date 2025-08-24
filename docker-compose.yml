@@ -1,12 +1,26 @@
+version: "3.8"
+
 services:
-  api:
-    build: ./backend/
-    command: python api.py  
+  backend:
+    build: ./backend
+    command: uvicorn api:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
 
-  server:
-    build: ./backend/ 
-    command: python server.py 
+  websocket-server:
+    build: ./backend
+    command: python server.py
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./backend:/app
 
-  client:
-    build: ./backend/ 
-    command: python client.py
+  frontend:
+    build: ./frontend
+    command: npm start
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
