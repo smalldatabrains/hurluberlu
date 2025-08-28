@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Use official Node.js image as the base
 FROM node:20
 
@@ -18,3 +19,7 @@ EXPOSE 3000
 
 # Start the development server
 CMD ["npm", "start"]
+=======
+FROM node:18-alpine
+
+>>>>>>> linear
