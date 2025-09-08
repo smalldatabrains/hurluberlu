@@ -29,4 +29,4 @@ direct P2P information sharing, we would like to get rid of the central server u
 
 ## Phase 5 : Polish and Fun
 - login system
-- see where othe user are
+- see where other user are

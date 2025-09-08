@@ -12,6 +12,10 @@ print(tensor.dtype)
 print(x.shape)
 print(y.shape)
 
+
+result=nn.Softmax(y)
+print(result)
+
 plt.scatter(x,y,color='blue', label-'Real data')
 
 class LinearModel(nn.Module):
