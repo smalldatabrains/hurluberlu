@@ -16,7 +16,7 @@ print(y.shape)
 result=nn.Softmax(y)
 print(result)
 
-plt.scatter(x,y,color='blue', label-'Real data')
+plt.scatter(x,y,color='blue', label='Real data')
 
 class LinearModel(nn.Module):
     def __init__(self):

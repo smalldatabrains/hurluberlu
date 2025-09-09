@@ -16,7 +16,7 @@ class CustomDataset(Dataset):
         return item
 
 
-class Classifier(nn.Module)
+class Classifier(nn.Module):
     def __init__(self):
         super(Classifier, self).__init__()
         self.classifier = nn.Sequential(
@@ -46,7 +46,7 @@ print(input.dtype)
 print(input.shape)
 print(input.device)
 
-output = model.(input)
+output = model(input)
 
 print(output.dtype)
 print(output.shape)
