@@ -49,17 +49,21 @@ class ResNet(nn.Module):
         self.model = nn.ModuleList
 
     def forward(x):
-        pass
+        x=SolidBloc()
+        return x
 
 if __name__=='__main__':
     # model
-
+    model = ResNet()
+    model.train()
     # Loss criterion
     criterion = nn.CrossEntropyLoss()
     # Optimizer
-    optimizer = optim.Adam()
+    optimizer = optim.Adam(model.parameters(),lr=0.001)
     # Epochs
     epochs = 10
     # Use dataloader
     for epoch in range(epochs):
-        pass
+        for image, label in dataloader:
+            print(image)
+            print(label)
