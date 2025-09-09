@@ -46,7 +46,7 @@ class ResNet(nn.Module):
         super().__init__()
         self.name = 'Resnet'
         self.sequence_list = [64, 128, 256, 512]
-        self.model = nn.ModuleList
+        self.fc = nn.Linear(64*264*264, 100)
 
     def forward(x):
         x=SolidBloc()
@@ -61,7 +61,7 @@ if __name__=='__main__':
     # Optimizer
     optimizer = optim.Adam(model.parameters(),lr=0.001)
     # Epochs
-    epochs = 10
+    epochs = 1
     # Use dataloader
     for epoch in range(epochs):
         for image, label in dataloader:
