@@ -9,7 +9,7 @@ import torchvision
 
 transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Resize([264,264])
+    transforms.Resize([224,224])
 ])
 
 dataset = torchvision.datasets.CIFAR100 (
@@ -21,23 +21,24 @@ dataset = torchvision.datasets.CIFAR100 (
 
 dataloader = DataLoader(dataset, batch_size = 64, shuffle = True)
 
-class SolidBloc(nn.Module):
+class SolidBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride):
         super().__init__()
-        self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=7, stride=stride)
-        self.conv2 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=2)
+        self.skip_connection = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride)
+        self.conv2 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride)
         self.relu = nn.ReLU()
-        self.skip_connection = nn.Sequential()
-        if stride!=1:
-            self.skip_connection = nn.Sequential(
-                nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=2)
-            )
 
     def forward(self, x):
-        x = self.conv1(x)
+        identity = self.skip_connection(x)
+        print("Identity shape", identity.shape)
+        x = self.conv2(x)
+        print("X shape", x.shape)
         x = self.relu(x)
-        x = self.conv1(x)
-        x = x + self.skip_connection(x)
+        print("X shape", x.shape)
+        x = self.conv2(x)
+        print("X shape", x.shape)
+        x = x + identity
+        x = self.relu(x)
 
         return x
     
@@ -45,11 +46,12 @@ class ResNet(nn.Module):
     def __init__(self):
         super().__init__()
         self.name = 'Resnet'
-        self.sequence_list = [64, 128, 256, 512]
-        self.fc = nn.Linear(64*264*264, 100)
+        self.first_conv = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=7, stride=2)
+        self.avgpool = nn.AdaptiveAvgPool2d((1,1))
+        self.fc = nn.Linear(512, 100) # 100 classes for CIFAR CIFAR100
 
     def forward(x):
-        x=SolidBloc()
+        x=SolidBlock()
         return x
 
 if __name__=='__main__':
