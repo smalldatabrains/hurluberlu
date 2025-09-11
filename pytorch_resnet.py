@@ -9,7 +9,9 @@ import torchvision
 
 transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Resize([224,224])
+    transforms.Resize([224,224]),
+    transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
+    
 ])
 
 dataset = torchvision.datasets.CIFAR100 (
@@ -25,9 +27,11 @@ class SolidBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride):
         super().__init__()
         self.skip_connection = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride)
-        self.conv2 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride)
+        self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride, padding=1)
+        self.conv2 = nn.Conv2d(in_channels=out_channels, out_channels=out_channels, kernel_size=3, stride=1, padding=1)
         self.relu = nn.ReLU()
-
+        self.batch_norm1 = nn.BatchNorm2d(out_channels)
+        self.batch_norm2 = nn.BatchNorm2d(out_channels)
     def forward(self, x):
         identity = self.skip_connection(x)
         print("Identity shape", identity.shape)
