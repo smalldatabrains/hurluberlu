@@ -1,5 +1,7 @@
 .env
+/saved_model
+/data
 *.pyc
 /.vscode
-/data
+/datagit ad
 __pycache__/

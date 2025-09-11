@@ -31,6 +31,8 @@ class SolidBlock(nn.Module):
         # skip connection
         if stride != 1 or in_channels != out_channels:
             self.skip_connection = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride)
+        else:
+            self.skip_connection = None
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride, padding=1) # padding to keep image dimension
         self.conv2 = nn.Conv2d(in_channels=out_channels, out_channels=out_channels, kernel_size=3, stride=1, padding=1)
         self.relu = nn.ReLU()
@@ -41,15 +43,15 @@ class SolidBlock(nn.Module):
         identity = x
         if self.skip_connection is not None:
             identity = self.skip_connection(identity) # in first block [64, 64, 112, 112]
-        print("Identity shape", identity.shape)
+        # print("Identity shape", identity.shape)
         x = self.conv1(x)
         x = self.batch_norm1(x)
-        print("X shape", x.shape)
+        # print("X shape", x.shape)
         x = self.relu(x)
-        print("X shape", x.shape)
+        # print("X shape", x.shape)
         x = self.conv2(x)
         x = self.batch_norm2(x)
-        print("X shape", x.shape)
+        # print("X shape", x.shape)
         x = x + identity
         x = self.relu(x)
 
@@ -119,11 +121,11 @@ if __name__=='__main__':
     # Optimizer
     optimizer = optim.Adam(model.parameters(),lr=0.001)
     # Epochs
-    epochs = 5
+    epochs = 20
     # Use dataloader
     for epoch in range(epochs):
         train_loss = 0
-        for batch_idx, (image, label) in enumerate(dataloader):
+        for batch_idx, (images, labels) in enumerate(dataloader):
             images, labels = images.to(device), labels.to(device)
             prediction = model(images)
             loss = criterion(prediction, labels)
