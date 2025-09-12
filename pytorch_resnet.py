@@ -23,7 +23,15 @@ dataset = torchvision.datasets.CIFAR100 (
     transform = transform
 )
 
+test_dataset = torchvision.datasets.CIFAR100 (
+    root='./data/test',
+    train = False,
+    download = True,
+    transform = transform
+)
+
 dataloader = DataLoader(dataset, batch_size = 64, shuffle = True)
+test_dataloader = DataLoader(test_dataset, batch_size = 64, shuffle = True)
 
 class SolidBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride):
@@ -115,7 +123,7 @@ if __name__=='__main__':
     print(device)
     # model
     model = ResNet().to(device)
-    model.train()
+    
     # Loss criterion
     criterion = nn.CrossEntropyLoss()
     # Optimizer
@@ -126,6 +134,7 @@ if __name__=='__main__':
     for epoch in range(epochs):
         train_loss = 0
         for batch_idx, (images, labels) in enumerate(dataloader):
+            model.train()
             images, labels = images.to(device), labels.to(device)
             prediction = model(images)
             loss = criterion(prediction, labels)
@@ -134,13 +143,32 @@ if __name__=='__main__':
             optimizer.step()
             train_loss += loss.item()
             print(f"Batch {batch_idx}/{len(dataloader)}")
-            print(f"Batch loss {loss}")
-            print(f"Trained {(batch_idx)*len(labels)} images in Epoch {epoch} with total loss {train_loss}")
-            writer.add_scalar('Loss/train', loss.item(), batch_idx)
-        writer.add_scalar('Loss/epoch', train_loss/len(dataloader), epoch)
+            print(f"Batch loss {loss:2f}")
+            writer.add_scalar('Loss/batch train', loss.item(), batch_idx)
+
+        # Loss evaluation on test dataset
+        with torch.no_grad(): # to avoid unecessary RAM consumption
+            test_loss = 0
+            for batch_idx, (images, labels) in enumerate(test_dataloader):
+                model.eval()
+                images, labels = images.to(device), labels.to(device)
+                prediction = model(images)
+                loss = criterion(model(images), labels)
+            test_loss += loss.item()
+        print(f"Test Batch {batch_idx}/{len(test_dataloader)}")
+        print(f"Test Batch loss {loss:2f}")
+        writer.add_scalar('Loss/test', test_loss/len(test_dataloader), epoch)
+        
+            
+        writer.add_scalar('Loss/train', train_loss/len(dataloader), epoch)
         print(f"Epoch {epoch} has average loss of {train_loss/len(dataloader)}")
-        PATH = f"./saved_model/CIFAR_MODEL_epoch_{epoch}.pth"
-        torch.save(model.state_dict(), PATH)
+        if epoch % 5 == 0:
+            PATH = f"./saved_model/CIFAR_MODEL_epoch_{epoch}.pth"
+            torch.save(model.state_dict(), PATH)
 
 # why bias = false is recommanded
 # decaying learning rate to be implemented
+# visualize model in tensorboard
+# visualize features map in tensorboard
+# how to compute FLOPS, what does it mean?
+# compute confusion matrix
