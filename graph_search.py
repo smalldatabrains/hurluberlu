@@ -15,8 +15,11 @@ def dfs(graph, start):
 
     while stack:
         node = stack.pop()
+        print('Node: ',node)
         if node not in visited:
             visited.append(node)
+            print('Visited: ',visited)
+            print('Graph[node]',graph[node])
             stack.extend(graph[node])
     return visited
 
