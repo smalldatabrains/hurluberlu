@@ -1,3 +1,7 @@
+from collection import queue
+
+# dummy structure graph
+
 graph = {
     'A': ['B', 'C'],
     'B': ['D', 'E'],
@@ -7,7 +11,16 @@ graph = {
     'F': []
 }
 
+
 # deep first search, iterative version
+
+
+def create_maze(width, height):
+    pass
+
+
+def visualize(algorithm):
+    pass
 
 def dfs(graph, start):
     stack=[start] # stack logic is LAST IN FIRST OUT
@@ -25,3 +38,5 @@ def dfs(graph, start):
 
 print(dfs(graph,'A'))
 
+def bfs(graph, start):
+    pass
